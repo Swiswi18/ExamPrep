@@ -14,7 +14,7 @@
   
   <script setup>
   import { ref } from 'vue'
-  import { signIn, signUp } from '@/lib/useAuth'
+  import { signIn, signUp } from '../lib/useAuth'
   import { useRouter } from 'vue-router'
   
   const router = useRouter()

@@ -1,50 +1,40 @@
 <template>
-    <div class="p-6 max-w-3xl mx-auto">
-      <h1 class="text-3xl mb-4">Study Materials</h1>
-      <div class="bg-gray-50 p-4 rounded-lg mb-6">
-        <h2 class="text-xl">Instructions</h2>
-        <p>Here you can find the study materials for SC-900. You can upload files, view resources, and more!</p>
-      </div>
-      
-      <!-- AI Integration Form -->
-      <div class="mb-6">
-        <h2 class="text-xl">Upload Study Resources</h2>
-        <input type="file" @change="handleFileUpload" class="p-2 rounded border mb-2" />
-        <button @click="processFile" class="btn bg-blue-500 text-white">Process File</button>
-      </div>
-      
-      <!-- AI Suggestions -->
-      <div v-if="aiSuggestions.length" class="mt-6">
-        <h2 class="text-xl">AI Suggestions</h2>
-        <ul>
-          <li v-for="(suggestion, index) in aiSuggestions" :key="index" class="p-2 border-b">
-            {{ suggestion }}
-          </li>
-        </ul>
+    <div class="p-6 max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold mb-6">Start Your SC-900 Study Plan</h1>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Search AI Panel -->
+        <div
+          class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl p-6 shadow hover:shadow-lg transition cursor-pointer"
+          @click="goToSearch"
+        >
+          <h2 class="text-xl font-semibold mb-2">🔍 Search Online (Perplexity / DeepSeek)</h2>
+          <p class="text-gray-600 dark:text-gray-300">Use AI search to explore topics from trusted sources like Microsoft Learn.</p>
+        </div>
+  
+        <!-- Upload PDF Panel -->
+        <div
+          class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-2xl p-6 shadow hover:shadow-lg transition cursor-pointer"
+          @click="goToUpload"
+        >
+          <h2 class="text-xl font-semibold mb-2">📄 Upload PDF (ChatPDF)</h2>
+          <p class="text-gray-600 dark:text-gray-300">Extract and summarize study topics from PDF documents like exam guides.</p>
+        </div>
       </div>
     </div>
   </template>
   
-  <script setup>
-  import { ref } from 'vue'
+  <script setup lang="ts">
+  import { useRouter } from 'vue-router'
   
-  const aiSuggestions = ref<string[]>([])
+  const router = useRouter()
   
-  const handleFileUpload = (event: Event) => {
-    const fileInput = event.target as HTMLInputElement
-    if (fileInput?.files?.length) {
-      // Handle file upload (like storing it locally, etc.)
-    }
+  const goToSearch = () => {
+    router.push('/search')
   }
   
-  const processFile = async () => {
-    // Simulate an AI process to get suggestions
-    aiSuggestions.value = [
-      'Review section 1: Basics of Azure',
-      'Focus on security controls in Azure',
-      'Understand the SC-900 exam objectives'
-    ]
+  const goToUpload = () => {
+    router.push('/upload')
   }
   </script>
-
   
