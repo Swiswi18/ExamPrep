@@ -34,12 +34,5 @@
   }
   </script>
   
-  <style scoped>
-  .input {
-    @apply border p-2 rounded;
-  }
-  .btn {
-    @apply p-2 rounded;
-  }
-  </style>
+  
   
