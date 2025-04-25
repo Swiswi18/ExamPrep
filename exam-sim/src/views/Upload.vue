@@ -10,7 +10,7 @@
   </template>
   
   <script setup lang="ts">
-  import UploadPanel from '@/components/UploadPanel.vue'
+  import UploadPanel from '../components/UploadPanel.vue'
   
   const handleUploadSuccess = (sourceId: string) => {
     console.log('PDF uploaded. Source ID:', sourceId)

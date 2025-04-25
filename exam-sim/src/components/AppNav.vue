@@ -14,20 +14,45 @@
       </div>
   
       <div class="flex items-center gap-4">
-        <button @click="toggleDark" class="text-xl">
+        <!-- Dark Mode Toggle Button -->
+        <button @click="toggleTheme" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-all">
           <span v-if="isDark">🌙</span>
           <span v-else>☀️</span>
         </button>
-        <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
-          ND
+  
+        <!-- Portfolio Initial Circle -->
+        <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+          N
         </div>
       </div>
     </header>
   </template>
   
-  <script setup lang="ts">
-  import { useDark, useToggle } from '@vueuse/core'
-  const isDark = useDark()
-  const toggleDark = useToggle(isDark)
+  <script setup>
+  import { ref } from 'vue'
+  
+  // Track dark mode state
+  const isDark = ref(false)
+  
+  // This method toggles the 'dark' class on the body element and logs the process
+  const toggleTheme = () => {
+    console.log("Toggling theme...")
+  
+    // Toggle the dark class on the body element
+    document.body.classList.toggle('dark')
+  
+    // Track the dark mode state and log it
+    isDark.value = !isDark.value
+    console.log(`Dark mode is now: ${isDark.value ? "enabled" : "disabled"}`)
+  
+    // Log the current body class list
+    console.log("Current body classes:", document.body.classList)
+  }
   </script>
+  
+  <style scoped>
+  button {
+    outline: none;
+  }
+  </style>
   

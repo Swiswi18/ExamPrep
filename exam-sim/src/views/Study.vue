@@ -1,44 +1,68 @@
 <template>
-    <div class="p-4 space-y-6 text-gray-900 dark:text-white">
-      <h1 class="text-2xl font-bold">Study Page</h1>
-  
-      <div class="flex flex-wrap gap-4">
-        <button @click="loadChatPDFTopics" class="btn">📄 From Uploaded PDF</button>
-        <button @click="loadPerplexityTopics" class="btn">🌐 From Perplexity</button>
+    <div class="p-4">
+      <h2 class="text-xl font-semibold mb-4 text-center dark:text-white">Topic Clusters</h2>
+      
+      <!-- Topic Clusters Grid -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div
+          v-for="(topics, domain) in clusters"
+          :key="domain"
+          class="bg-white dark:bg-gray-800 rounded-xl shadow p-4"
+        >
+          <h3 class="text-lg font-bold mb-2 capitalize text-blue-600 dark:text-blue-300">{{ domain }}</h3>
+          <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-200">
+            <li v-for="(topic, idx) in topics" :key="idx">{{ topic }}</li>
+          </ul>
+        </div>
       </div>
   
-      <TopicCluster v-if="Object.keys(topicClusters).length" :clusters="topicClusters" />
+      <!-- Export Button -->
+      <div class="mt-6 text-center">
+        <button
+          @click="exportToList"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Export as List
+        </button>
+      </div>
     </div>
   </template>
   
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import TopicCluster from '@/components/TopicCluster.vue'
+  <script lang="ts" setup>
+  import { defineProps } from 'vue'
   
-  const topicClusters = ref<Record<string, string[]>>({})
+  const props = defineProps<{
+    clusters: Record<string, string[]>
+  }>()
   
-  const loadChatPDFTopics = async () => {
-    // Mocked data from ChatPDF
-    topicClusters.value = {
-      "Identity & Access Management": ["Azure AD", "Conditional Access", "SSO"],
-      "Security": ["MFA", "Microsoft Defender", "Zero Trust"],
-      "Compliance": ["Compliance Manager", "Insider Risk Management"]
-    }
-  }
+  /**
+   * Function to format and export the clusters as a plain list
+   */
+  const exportToList = () => {
+    const formattedList = Object.entries(props.clusters)
+      .map(([domain, topics]) => {
+        return `${domain}:\n${topics.join('\n')}`
+      })
+      .join('\n\n')
   
-  const loadPerplexityTopics = async () => {
-    // Mocked data from Perplexity
-    topicClusters.value = {
-      "Identity": ["Azure AD basics", "User roles", "Role-based access"],
-      "Security": ["Threat protection", "Secure Score", "SIEM"],
-      "Governance": ["Policy compliance", "Data loss prevention", "Auditing"]
-    }
+    // Copy to clipboard
+    navigator.clipboard.writeText(formattedList)
+      .then(() => {
+        alert('Topic list copied to clipboard!')
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err)
+      })
   }
   </script>
   
   <style scoped>
-  .btn {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded;
+  button {
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #2563eb;
   }
   </style>
   
