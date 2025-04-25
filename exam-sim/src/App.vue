@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <nav class="p-4 bg-gray-100 flex gap-4">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/study">Study</RouterLink>
-      <RouterLink to="/practice">Practice</RouterLink>
-      <RouterLink to="/exam">Mock Exam</RouterLink>
-      <RouterLink to="/upload">Upload</RouterLink>
-      <RouterLink to="/search">Search</RouterLink>
-      <RouterLink to="/auth">Auth</RouterLink>
-
-    </nav>
+  <div class="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <AppNav />
     <RouterView />
   </div>
 </template>
+
+<script setup lang="ts">
+import AppNav from '@/components/AppNav.vue'
+</script>
+

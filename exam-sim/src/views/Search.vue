@@ -1,25 +1,23 @@
 <template>
-    <div class="p-6 max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold mb-4">Search SC-900 Topics</h1>
-  
-      <p class="text-gray-600 dark:text-gray-300 mb-6">
-        Use Perplexity to find trusted study material from sources like Microsoft Learn.
-        Enter a topic below to begin your search.
+    <div class="max-w-4xl mx-auto p-6">
+      <h1 class="text-2xl font-semibold mb-4">Search Online Study Topics</h1>
+      <p class="mb-6 text-gray-600 dark:text-gray-300">
+        Use Perplexity to fetch summaries and explanations of SC-900 topics.
       </p>
   
-      <div class="flex flex-col md:flex-row gap-3">
-        <input
-          v-model="query"
-          type="text"
-          placeholder="e.g. Azure AD roles, Zero Trust, Compliance"
-          class="w-full px-4 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-white"
-        />
-        <button
-          class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-          @click="openSearch"
-        >
-          Search Perplexity
-        </button>
+      <input
+        v-model="query"
+        placeholder="e.g. Azure Active Directory overview"
+        class="w-full p-3 border rounded mb-4 dark:bg-gray-800 dark:border-gray-600"
+      />
+  
+      <button @click="search" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        Search
+      </button>
+  
+      <div v-if="result" class="mt-6 bg-gray-100 dark:bg-gray-800 p-4 rounded">
+        <h2 class="text-xl font-semibold mb-2">Response</h2>
+        <p>{{ result }}</p>
       </div>
     </div>
   </template>
@@ -28,12 +26,14 @@
   import { ref } from 'vue'
   
   const query = ref('')
+  const result = ref<string | null>(null)
   
-  const openSearch = () => {
-    if (!query.value.trim()) return
+  const search = async () => {
+    result.value = 'Loading...'
   
-    const encoded = encodeURIComponent(`SC-900 ${query.value}`)
-    window.open(`https://www.perplexity.ai/search?q=${encoded}`, '_blank')
+    // Replace this mock with actual Perplexity integration or dummy response
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    result.value = `This is a mock response for "${query.value}". Perplexity API will return structured text.`
   }
   </script>
   
