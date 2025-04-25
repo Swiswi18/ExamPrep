@@ -1,46 +1,33 @@
 <template>
-    <nav class="p-4 bg-gray-100 dark:bg-gray-800 shadow-md flex flex-wrap justify-between items-center gap-4">
-      <div class="flex flex-wrap gap-4 text-sm font-medium">
-        <RouterLink class="nav-link" to="/">Home</RouterLink>
-        <RouterLink class="nav-link" to="/study">Study</RouterLink>
-        <RouterLink class="nav-link" to="/practice">Practice</RouterLink>
-        <RouterLink class="nav-link" to="/exam">Mock Exam</RouterLink>
-        <RouterLink class="nav-link" to="/upload">Upload</RouterLink>
-        <RouterLink class="nav-link" to="/search">Search</RouterLink>
-        <RouterLink class="nav-link" to="/auth">Auth</RouterLink>
+    <header class="bg-white dark:bg-gray-900 shadow px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-6">
+        <span class="text-xl font-bold text-blue-600 dark:text-blue-400">ExamSim</span>
+        <nav class="hidden md:flex gap-4 text-gray-700 dark:text-gray-200">
+          <RouterLink to="/" class="hover:underline">Home</RouterLink>
+          <RouterLink to="/study" class="hover:underline">Study</RouterLink>
+          <RouterLink to="/practice" class="hover:underline">Practice</RouterLink>
+          <RouterLink to="/exam" class="hover:underline">Mock Exam</RouterLink>
+          <RouterLink to="/upload" class="hover:underline">Upload</RouterLink>
+          <RouterLink to="/search" class="hover:underline">Search</RouterLink>
+          <RouterLink to="/auth" class="hover:underline">Auth</RouterLink>
+        </nav>
       </div>
+  
       <div class="flex items-center gap-4">
-        <button @click="toggleDarkMode" class="text-gray-700 dark:text-white text-lg">
-          {{ isDark ? '🌙' : '☀️' }}
+        <button @click="toggleDark" class="text-xl">
+          <span v-if="isDark">🌙</span>
+          <span v-else>☀️</span>
         </button>
-        <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">
-          A
+        <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
+          ND
         </div>
       </div>
-    </nav>
+    </header>
   </template>
   
   <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-  
-  const isDark = ref(false)
-  
-  const toggleDarkMode = () => {
-    isDark.value = !isDark.value
-    document.documentElement.classList.toggle('dark', isDark.value)
-    localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-  }
-  
-  onMounted(() => {
-    const saved = localStorage.getItem('theme')
-    isDark.value = saved === 'dark'
-    document.documentElement.classList.toggle('dark', isDark.value)
-  })
+  import { useDark, useToggle } from '@vueuse/core'
+  const isDark = useDark()
+  const toggleDark = useToggle(isDark)
   </script>
-  
-  <style scoped>
-  .nav-link {
-    @apply text-gray-700 dark:text-white hover:underline;
-  }
-  </style>
   
