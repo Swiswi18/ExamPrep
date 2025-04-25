@@ -1,23 +1,24 @@
 <template>
     <div class="p-6 max-w-4xl mx-auto">
-      <h1 class="text-2xl font-bold mb-4">Search with AI (Perplexity / DeepSeek)</h1>
+      <h1 class="text-3xl font-bold mb-4">Search SC-900 Topics</h1>
   
-      <p class="mb-4 text-gray-700 dark:text-gray-300">
-        Enter a topic to search SC-900 study materials using Perplexity or DeepSeek.
+      <p class="text-gray-600 dark:text-gray-300 mb-6">
+        Use Perplexity to find trusted study material from sources like Microsoft Learn.
+        Enter a topic below to begin your search.
       </p>
   
-      <div class="flex gap-2">
+      <div class="flex flex-col md:flex-row gap-3">
         <input
           v-model="query"
           type="text"
-          placeholder="e.g. Azure AD roles"
-          class="flex-1 px-4 py-2 border rounded dark:bg-gray-800 dark:text-white"
+          placeholder="e.g. Azure AD roles, Zero Trust, Compliance"
+          class="w-full px-4 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-white"
         />
         <button
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
           @click="openSearch"
         >
-          Search
+          Search Perplexity
         </button>
       </div>
     </div>
@@ -29,9 +30,9 @@
   const query = ref('')
   
   const openSearch = () => {
-    if (!query.value) return
+    if (!query.value.trim()) return
   
-    const encoded = encodeURIComponent(query.value)
+    const encoded = encodeURIComponent(`SC-900 ${query.value}`)
     window.open(`https://www.perplexity.ai/search?q=${encoded}`, '_blank')
   }
   </script>
